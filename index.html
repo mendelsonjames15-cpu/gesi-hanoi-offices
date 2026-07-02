@@ -18,7 +18,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_b6e8e258d79cb53c963c9601af432ae7 {
+                #map_3ae32de94f7d06d3c78156745c5bc6a8 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -101,38 +101,155 @@
       .popup a:hover {
         text-decoration: underline;
       }
+
+      .map-legend {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        z-index: 9999;
+        min-width: 126px;
+        max-width: min(180px, calc(100vw - 86px));
+        max-height: calc(100vh - 92px);
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(31, 41, 55, 0.16);
+        border-radius: 6px;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+        color: #111827;
+        padding: 10px 12px;
+      }
+
+      .map-legend h2 {
+        margin: 0 0 8px;
+        color: #111827;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .map-legend ul {
+        display: grid;
+        gap: 7px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .map-legend li {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .legend-marker {
+        display: inline-block;
+        flex: 0 0 auto;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid rgba(17, 24, 39, 0.28);
+      }
+
+      .legend-marker-red { background: #d63e2a; }
+      .legend-marker-blue { background: #2a81cb; }
+      .legend-marker-green { background: #72b026; }
+      .legend-marker-purple { background: #9c2bcb; }
+      .legend-marker-orange { background: #f69730; }
+      .legend-marker-darkred { background: #a23336; }
+      .legend-marker-darkblue { background: #2c5b89; }
+      .legend-marker-darkgreen { background: #728224; }
+      .legend-marker-cadetblue { background: #436978; }
+      .legend-marker-darkpurple { background: #5b396b; }
+
+      @media (max-width: 520px) {
+        .map-legend {
+          top: 8px;
+          right: 8px;
+          max-width: min(150px, calc(100vw - 78px));
+          max-height: 42vh;
+          padding: 8px 10px;
+        }
+
+        .map-legend li {
+          font-size: 11px;
+        }
+      }
     </style>
     
 </head>
 <body>
     
     
-            <div class="folium-map" id="map_b6e8e258d79cb53c963c9601af432ae7" ></div>
+    <section class="map-legend">
+      <h2>Offices</h2>
+      <ul>
+        <li>
+          <span class="legend-marker legend-marker-blue"></span>
+          <span>Haarika</span>
+        </li>
+        
+
+        <li>
+          <span class="legend-marker legend-marker-cadetblue"></span>
+          <span>Brad</span>
+        </li>
+        
+
+        <li>
+          <span class="legend-marker legend-marker-red"></span>
+          <span>Sophia</span>
+        </li>
+        
+
+        <li>
+          <span class="legend-marker legend-marker-purple"></span>
+          <span>Evelyn, Caleb, Uma, &amp; Jonathan</span>
+        </li>
+        
+
+        <li>
+          <span class="legend-marker legend-marker-green"></span>
+          <span>Emily</span>
+        </li>
+        
+
+        <li>
+          <span class="legend-marker legend-marker-darkgreen"></span>
+          <span>James, Nic, &amp; Alex</span>
+        </li>
+        </ul>
+    </section>
+    
+    
+            <div class="folium-map" id="map_3ae32de94f7d06d3c78156745c5bc6a8" ></div>
         
 </body>
 <script>
     
     
-            var map_b6e8e258d79cb53c963c9601af432ae7 = L.map(
-                "map_b6e8e258d79cb53c963c9601af432ae7",
+            var map_3ae32de94f7d06d3c78156745c5bc6a8 = L.map(
+                "map_3ae32de94f7d06d3c78156745c5bc6a8",
                 {
-                    center: [21.018826666666666, 105.81769833333334],
+                    center: [21.0278, 105.8342],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 12,
+  "zoom": 11,
   "zoomControl": true,
   "preferCanvas": true,
 }
 
                 }
             );
-            L.control.scale().addTo(map_b6e8e258d79cb53c963c9601af432ae7);
+            L.control.scale().addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
 
             
 
         
     
-            var tile_layer_711d06f014fb926ed574477a9ed565eb = L.tileLayer(
+            var tile_layer_5ca1ad24e692d64e451df48e967da5ff = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -149,19 +266,19 @@
             );
         
     
-            tile_layer_711d06f014fb926ed574477a9ed565eb.addTo(map_b6e8e258d79cb53c963c9601af432ae7);
+            tile_layer_5ca1ad24e692d64e451df48e967da5ff.addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
         
     
-            var marker_c4fbb37e1ff7c4dce55c15ef7b35f741 = L.marker(
+            var marker_4539a725101753bf55b56213c0b48e94 = L.marker(
                 [21.03579, 105.80387],
                 {
 }
-            ).addTo(map_b6e8e258d79cb53c963c9601af432ae7);
+            ).addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
         
     
-            var icon_1dbbd58739652a5bf70069d215fe47f2 = L.AwesomeMarkers.icon(
+            var icon_ef81699575333c231eef5fe1aeda1c0b = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "gray",
+  "markerColor": "blue",
   "iconColor": "white",
   "icon": "briefcase",
   "prefix": "fa",
@@ -170,46 +287,36 @@
             );
         
     
-        var popup_cdc81fe8cdd00e3e59b65936f351e6e7 = L.popup({
+        var popup_75bf190ea47526b26b80815b99bb8670 = L.popup({
   "maxWidth": 340,
 });
 
         
             
-                var html_43e0c3e17c2b2a518e1216de5fe85341 = $(`<div id="html_43e0c3e17c2b2a518e1216de5fe85341" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Haarika&#x27;s Work</h3>       <dl><dt>People</dt><dd>Haarika Palacharla</dd> <dt>Address</dt><dd>28 Đ. Nguyễn Khánh Toàn, Nghĩa Đô, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.03579%2C105.80387" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
-                popup_cdc81fe8cdd00e3e59b65936f351e6e7.setContent(html_43e0c3e17c2b2a518e1216de5fe85341);
+                var html_5cbbb901793353155a92fc8ca8fd1b7d = $(`<div id="html_5cbbb901793353155a92fc8ca8fd1b7d" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Haarika&#x27;s Work</h3>       <dl><dt>People</dt><dd>Haarika</dd> <dt>Address</dt><dd>28 Đ. Nguyễn Khánh Toàn, Nghĩa Đô, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.03579%2C105.80387" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
+                popup_75bf190ea47526b26b80815b99bb8670.setContent(html_5cbbb901793353155a92fc8ca8fd1b7d);
             
         
 
-        marker_c4fbb37e1ff7c4dce55c15ef7b35f741.bindPopup(popup_cdc81fe8cdd00e3e59b65936f351e6e7)
+        marker_4539a725101753bf55b56213c0b48e94.bindPopup(popup_75bf190ea47526b26b80815b99bb8670)
         ;
 
         
     
     
-            marker_c4fbb37e1ff7c4dce55c15ef7b35f741.bindTooltip(
-                `<div>
-                     Haarika's Work
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_c4fbb37e1ff7c4dce55c15ef7b35f741.setIcon(icon_1dbbd58739652a5bf70069d215fe47f2);
+                marker_4539a725101753bf55b56213c0b48e94.setIcon(icon_ef81699575333c231eef5fe1aeda1c0b);
             
     
-            var marker_a1df071b0492a61771e3d8480e83f4d7 = L.marker(
+            var marker_8a05c129dd794ed43955a8550b900b57 = L.marker(
                 [21.02706, 105.81909],
                 {
 }
-            ).addTo(map_b6e8e258d79cb53c963c9601af432ae7);
+            ).addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
         
     
-            var icon_bfb60a693f7616c963e5d7ebb89dc1ea = L.AwesomeMarkers.icon(
+            var icon_2ae095ba7f2947beb33b4f2b6a36d225 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "darkpurple",
+  "markerColor": "cadetblue",
   "iconColor": "white",
   "icon": "briefcase",
   "prefix": "fa",
@@ -218,44 +325,110 @@
             );
         
     
-        var popup_0a98ba6f38988775ea91dc28d5698b59 = L.popup({
+        var popup_8df4447cbaa3a473889380084b614d7c = L.popup({
   "maxWidth": 340,
 });
 
         
             
-                var html_a9ec44e834d4992350cb562c9a256d51 = $(`<div id="html_a9ec44e834d4992350cb562c9a256d51" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Brad&#x27;s Work</h3>       <dl><dt>People</dt><dd>Brad</dd> <dt>Address</dt><dd>1C11 Ngõ 140 Giảng Võ, Khu tập thể Giảng Võ, Giảng Võ, Hà Nội 100000</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.02706%2C105.81909" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
-                popup_0a98ba6f38988775ea91dc28d5698b59.setContent(html_a9ec44e834d4992350cb562c9a256d51);
+                var html_f0fb0f76142eeca7b3c0c134ab413085 = $(`<div id="html_f0fb0f76142eeca7b3c0c134ab413085" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Brad&#x27;s Work</h3>       <dl><dt>People</dt><dd>Brad</dd> <dt>Address</dt><dd>1C11 Ngõ 140 Giảng Võ, Khu tập thể Giảng Võ, Giảng Võ, Hà Nội 100000</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.02706%2C105.81909" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
+                popup_8df4447cbaa3a473889380084b614d7c.setContent(html_f0fb0f76142eeca7b3c0c134ab413085);
             
         
 
-        marker_a1df071b0492a61771e3d8480e83f4d7.bindPopup(popup_0a98ba6f38988775ea91dc28d5698b59)
+        marker_8a05c129dd794ed43955a8550b900b57.bindPopup(popup_8df4447cbaa3a473889380084b614d7c)
         ;
 
         
     
     
-            marker_a1df071b0492a61771e3d8480e83f4d7.bindTooltip(
-                `<div>
-                     Brad's Work
-                 </div>`,
+                marker_8a05c129dd794ed43955a8550b900b57.setIcon(icon_2ae095ba7f2947beb33b4f2b6a36d225);
+            
+    
+            var marker_20afcf8032e1a5ac4cf84797c7c0348b = L.marker(
+                [21.02962, 105.78188],
                 {
-  "sticky": true,
+}
+            ).addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
+        
+    
+            var icon_425d275ea4e91895ebdd2248887b87d2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "briefcase",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
 }
             );
         
     
-                marker_a1df071b0492a61771e3d8480e83f4d7.setIcon(icon_bfb60a693f7616c963e5d7ebb89dc1ea);
+        var popup_877bf47685860320fc9e5d639d5a5663 = L.popup({
+  "maxWidth": 340,
+});
+
+        
             
-    
-            var marker_e751f683017677595cef3ceb8b1738cc = L.marker(
-                [21.02962, 105.78188],
-                {
-}
-            ).addTo(map_b6e8e258d79cb53c963c9601af432ae7);
+                var html_58b3beb55ae0a14ce0455b8ff11daa2f = $(`<div id="html_58b3beb55ae0a14ce0455b8ff11daa2f" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Sophia&#x27;s Work</h3>       <dl><dt>People</dt><dd>Sophia</dd> <dt>Address</dt><dd>DETECH Building, 8 Tôn Thất Thuyết, Mỹ Đình 2, Nam Từ Liêm, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.02962%2C105.78188" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
+                popup_877bf47685860320fc9e5d639d5a5663.setContent(html_58b3beb55ae0a14ce0455b8ff11daa2f);
+            
+        
+
+        marker_20afcf8032e1a5ac4cf84797c7c0348b.bindPopup(popup_877bf47685860320fc9e5d639d5a5663)
+        ;
+
         
     
-            var icon_b9afe22d2525cea6b370e44234133012 = L.AwesomeMarkers.icon(
+    
+                marker_20afcf8032e1a5ac4cf84797c7c0348b.setIcon(icon_425d275ea4e91895ebdd2248887b87d2);
+            
+    
+            var marker_fb1ac0eb8f405f92f52b6ff464b74447 = L.marker(
+                [21.0121, 105.80768],
+                {
+}
+            ).addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
+        
+    
+            var icon_1aff0f2f18d3afeff48eae30edaffadf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "briefcase",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c5896c8af264f4e297ba63531c63dbf8 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_1bf3c29a2733a6c1492911d7bda2c5d4 = $(`<div id="html_1bf3c29a2733a6c1492911d7bda2c5d4" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Evelyn&#x27;s Work</h3>       <dl><dt>People</dt><dd>Evelyn, Caleb, Uma, &amp; Jonathan</dd> <dt>Address</dt><dd>169 Đ. Nguyễn Ngọc Vũ, Yên Hòa, Hà Nội 100000</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.0121%2C105.80768" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
+                popup_c5896c8af264f4e297ba63531c63dbf8.setContent(html_1bf3c29a2733a6c1492911d7bda2c5d4);
+            
+        
+
+        marker_fb1ac0eb8f405f92f52b6ff464b74447.bindPopup(popup_c5896c8af264f4e297ba63531c63dbf8)
+        ;
+
+        
+    
+    
+                marker_fb1ac0eb8f405f92f52b6ff464b74447.setIcon(icon_1aff0f2f18d3afeff48eae30edaffadf);
+            
+    
+            var marker_81a9caca3c170d40563a4751011bb743 = L.marker(
+                [20.99029, 105.83603],
+                {
+}
+            ).addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
+        
+    
+            var icon_ee4efe3ab7425313c98eb2afad760181 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
@@ -266,142 +439,36 @@
             );
         
     
-        var popup_752caa78c5f499c5ac88d394bdb0779b = L.popup({
+        var popup_e8293bd7604059cceb928c72ac2a84bd = L.popup({
   "maxWidth": 340,
 });
 
         
             
-                var html_6ca2185bea964441946e8f5f14f2e3fd = $(`<div id="html_6ca2185bea964441946e8f5f14f2e3fd" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Sophia&#x27;s Work</h3>       <dl><dt>People</dt><dd>Sophia</dd> <dt>Address</dt><dd>DETECH Building, 8 Tôn Thất Thuyết, Mỹ Đình 2, Nam Từ Liêm, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.02962%2C105.78188" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
-                popup_752caa78c5f499c5ac88d394bdb0779b.setContent(html_6ca2185bea964441946e8f5f14f2e3fd);
+                var html_104013cc513593b7d52000419665799c = $(`<div id="html_104013cc513593b7d52000419665799c" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Emily&#x27;s Work</h3>       <dl><dt>People</dt><dd>Emily</dd> <dt>Address</dt><dd>96A P. Định Công, Phương Liệt, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=20.99029%2C105.83603" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
+                popup_e8293bd7604059cceb928c72ac2a84bd.setContent(html_104013cc513593b7d52000419665799c);
             
         
 
-        marker_e751f683017677595cef3ceb8b1738cc.bindPopup(popup_752caa78c5f499c5ac88d394bdb0779b)
+        marker_81a9caca3c170d40563a4751011bb743.bindPopup(popup_e8293bd7604059cceb928c72ac2a84bd)
         ;
 
         
     
     
-            marker_e751f683017677595cef3ceb8b1738cc.bindTooltip(
-                `<div>
-                     Sophia's Work
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_e751f683017677595cef3ceb8b1738cc.setIcon(icon_b9afe22d2525cea6b370e44234133012);
+                marker_81a9caca3c170d40563a4751011bb743.setIcon(icon_ee4efe3ab7425313c98eb2afad760181);
             
     
-            var marker_5d50b5e6f94b7ce78608b0947dffbc06 = L.marker(
-                [21.0121, 105.80768],
-                {
-}
-            ).addTo(map_b6e8e258d79cb53c963c9601af432ae7);
-        
-    
-            var icon_c276fda615714c8bc788bfaa97b193e9 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "orange",
-  "iconColor": "white",
-  "icon": "briefcase",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_1c21b1fe8e11abdf70407a51e07f8710 = L.popup({
-  "maxWidth": 340,
-});
-
-        
-            
-                var html_1c813325e7c4a1e78139f31accda17f2 = $(`<div id="html_1c813325e7c4a1e78139f31accda17f2" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Evelyn&#x27;s Work</h3>       <dl><dt>People</dt><dd>Evelyn Heath</dd> <dt>Address</dt><dd>169 Đ. Nguyễn Ngọc Vũ, Yên Hòa, Hà Nội 100000</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.0121%2C105.80768" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
-                popup_1c21b1fe8e11abdf70407a51e07f8710.setContent(html_1c813325e7c4a1e78139f31accda17f2);
-            
-        
-
-        marker_5d50b5e6f94b7ce78608b0947dffbc06.bindPopup(popup_1c21b1fe8e11abdf70407a51e07f8710)
-        ;
-
-        
-    
-    
-            marker_5d50b5e6f94b7ce78608b0947dffbc06.bindTooltip(
-                `<div>
-                     Evelyn's Work
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_5d50b5e6f94b7ce78608b0947dffbc06.setIcon(icon_c276fda615714c8bc788bfaa97b193e9);
-            
-    
-            var marker_8f80c879707e10133b153f3dda06ebe4 = L.marker(
-                [20.99029, 105.83603],
-                {
-}
-            ).addTo(map_b6e8e258d79cb53c963c9601af432ae7);
-        
-    
-            var icon_354204ccf69fcaac4c19a1add0c69f69 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "black",
-  "iconColor": "white",
-  "icon": "briefcase",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_cc5c71612f093bbc063c80ac0a92d733 = L.popup({
-  "maxWidth": 340,
-});
-
-        
-            
-                var html_133f7d6573518074b882839c4d82e623 = $(`<div id="html_133f7d6573518074b882839c4d82e623" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Emily&#x27;s Work</h3>       <dl><dt>People</dt><dd>Emily</dd> <dt>Address</dt><dd>96A P. Định Công, Phương Liệt, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=20.99029%2C105.83603" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
-                popup_cc5c71612f093bbc063c80ac0a92d733.setContent(html_133f7d6573518074b882839c4d82e623);
-            
-        
-
-        marker_8f80c879707e10133b153f3dda06ebe4.bindPopup(popup_cc5c71612f093bbc063c80ac0a92d733)
-        ;
-
-        
-    
-    
-            marker_8f80c879707e10133b153f3dda06ebe4.bindTooltip(
-                `<div>
-                     Emily's Work
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_8f80c879707e10133b153f3dda06ebe4.setIcon(icon_354204ccf69fcaac4c19a1add0c69f69);
-            
-    
-            var marker_4ca43e7b1b5e4dbb255bf3fcbce2cb7c = L.marker(
+            var marker_39df11eabb71126aabb6b78ac617cf51 = L.marker(
                 [21.0181, 105.85764],
                 {
 }
-            ).addTo(map_b6e8e258d79cb53c963c9601af432ae7);
+            ).addTo(map_3ae32de94f7d06d3c78156745c5bc6a8);
         
     
-            var icon_9fab63c8a858947e9155e4d68e6e759c = L.AwesomeMarkers.icon(
+            var icon_930eea3c58d965f7c3c47391eab03729 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "darkred",
+  "markerColor": "darkgreen",
   "iconColor": "white",
   "icon": "briefcase",
   "prefix": "fa",
@@ -410,34 +477,30 @@
             );
         
     
-        var popup_4887485a81b676707cea1775c33720f5 = L.popup({
+        var popup_ac6d2e749a0d3f50c71bf3dd0c7ea8eb = L.popup({
   "maxWidth": 340,
 });
 
         
             
-                var html_c19ab22a4b5545588ea5b6516570a14e = $(`<div id="html_c19ab22a4b5545588ea5b6516570a14e" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>James&#x27;s Work</h3>       <dl><dt>People</dt><dd>James</dd> <dt>Address</dt><dd>National Institute of Hygiene and Epidemiology, 1 Yersin, Hai Bà Trưng, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.0181%2C105.85764" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
-                popup_4887485a81b676707cea1775c33720f5.setContent(html_c19ab22a4b5545588ea5b6516570a14e);
+                var html_c55499e674b0ae28707ec6d09b39b401 = $(`<div id="html_c55499e674b0ae28707ec6d09b39b401" style="width: 100.0%; height: 100.0%;">     <section class="popup">       <h3>Oxford University Clinical Research Unit, NIHE Office</h3>       <dl><dt>People</dt><dd>James, Nic, &amp; Alex</dd> <dt>Address</dt><dd>National Institute of Hygiene and Epidemiology, 1 Yersin, Hai Bà Trưng, Hà Nội</dd> <dt>Google Maps</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=21.0181%2C105.85764" target="_blank" rel="noopener noreferrer">Open in Google Maps</a></dd></dl>     </section>     </div>`)[0];
+                popup_ac6d2e749a0d3f50c71bf3dd0c7ea8eb.setContent(html_c55499e674b0ae28707ec6d09b39b401);
             
         
 
-        marker_4ca43e7b1b5e4dbb255bf3fcbce2cb7c.bindPopup(popup_4887485a81b676707cea1775c33720f5)
+        marker_39df11eabb71126aabb6b78ac617cf51.bindPopup(popup_ac6d2e749a0d3f50c71bf3dd0c7ea8eb)
         ;
 
         
     
     
-            marker_4ca43e7b1b5e4dbb255bf3fcbce2cb7c.bindTooltip(
-                `<div>
-                     James's Work
-                 </div>`,
-                {
-  "sticky": true,
-}
+                marker_39df11eabb71126aabb6b78ac617cf51.setIcon(icon_930eea3c58d965f7c3c47391eab03729);
+            
+    
+            map_3ae32de94f7d06d3c78156745c5bc6a8.fitBounds(
+                [[21.03579, 105.80387], [21.02706, 105.81909], [21.02962, 105.78188], [21.0121, 105.80768], [20.99029, 105.83603], [21.0181, 105.85764]],
+                {"maxZoom": 12, "padding": [56, 56]}
             );
         
-    
-                marker_4ca43e7b1b5e4dbb255bf3fcbce2cb7c.setIcon(icon_9fab63c8a858947e9155e4d68e6e759c);
-            
 </script>
 </html>

@@ -16,6 +16,8 @@ DEFAULT_INPUT = Path("data/workplaces.csv")
 DEFAULT_OUTPUT = Path("index.html")
 DEFAULT_CENTER = (21.0278, 105.8342)
 SITE_TITLE = "GESI Hanoi Offices"
+INITIAL_BOUNDS_PADDING = (56, 56)
+MAX_INITIAL_ZOOM = 12
 MARKER_COLORS = [
     "red",
     "blue",
@@ -23,16 +25,10 @@ MARKER_COLORS = [
     "purple",
     "orange",
     "darkred",
-    "lightred",
     "darkblue",
     "darkgreen",
     "cadetblue",
     "darkpurple",
-    "pink",
-    "lightblue",
-    "lightgreen",
-    "gray",
-    "black",
 ]
 
 
@@ -55,6 +51,14 @@ def split_people(value: str) -> tuple[str, ...]:
         for person in value.replace(";", ",").split(",")
         if person.strip()
     )
+
+
+def format_people(people: tuple[str, ...]) -> str:
+    if len(people) <= 1:
+        return people[0] if people else ""
+    if len(people) == 2:
+        return " & ".join(people)
+    return f"{', '.join(people[:-1])}, & {people[-1]}"
 
 
 def merge_locations(locations: list[WorkplaceLocation]) -> list[WorkplaceLocation]:
@@ -147,7 +151,7 @@ def google_maps_url(location: WorkplaceLocation) -> str:
 
 
 def popup_html(location: WorkplaceLocation) -> str:
-    people = ", ".join(location.people)
+    people = format_people(location.people)
     maps_url = google_maps_url(location)
     rows: list[tuple[str, str, bool]] = [
         ("People", people, False),
@@ -191,20 +195,28 @@ def random_marker_colors(count: int) -> list[str]:
     return random.sample(MARKER_COLORS, count)
 
 
-def build_map(locations: list[WorkplaceLocation]) -> folium.Map:
-    if locations:
-        center = (
-            mean(location.latitude for location in locations),
-            mean(location.longitude for location in locations),
-        )
-        zoom_start = 12
-    else:
-        center = DEFAULT_CENTER
-        zoom_start = 11
+def legend_html(locations: list[WorkplaceLocation], colors: list[str]) -> str:
+    rows = "\n".join(
+        f"""
+        <li>
+          <span class="legend-marker legend-marker-{html.escape(color)}"></span>
+          <span>{html.escape(format_people(location.people) or location.location_name)}</span>
+        </li>
+        """
+        for location, color in zip(locations, colors)
+    )
+    return f"""
+    <section class="map-legend">
+      <h2>Offices</h2>
+      <ul>{rows}</ul>
+    </section>
+    """
 
+
+def build_map(locations: list[WorkplaceLocation]) -> folium.Map:
     map_ = folium.Map(
-        location=center,
-        zoom_start=zoom_start,
+        location=DEFAULT_CENTER,
+        zoom_start=11,
         tiles="CartoDB positron",
         control_scale=True,
         prefer_canvas=True,
@@ -215,9 +227,18 @@ def build_map(locations: list[WorkplaceLocation]) -> folium.Map:
         folium.Marker(
             location=(location.latitude, location.longitude),
             popup=folium.Popup(popup_html(location), max_width=340),
-            tooltip=location.location_name,
             icon=folium.Icon(color=color, icon="briefcase", prefix="fa"),
         ).add_to(map_)
+
+    if locations:
+        map_.fit_bounds(
+            [(location.latitude, location.longitude) for location in locations],
+            padding=INITIAL_BOUNDS_PADDING,
+            max_zoom=MAX_INITIAL_ZOOM,
+        )
+
+    legend = folium.Element(legend_html(locations, colors))
+    map_.get_root().html.add_child(legend)
 
     return map_
 
@@ -272,6 +293,82 @@ def inject_styles(html_text: str) -> str:
 
       .popup a:hover {
         text-decoration: underline;
+      }
+
+      .map-legend {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        z-index: 9999;
+        min-width: 126px;
+        max-width: min(180px, calc(100vw - 86px));
+        max-height: calc(100vh - 92px);
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(31, 41, 55, 0.16);
+        border-radius: 6px;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+        color: #111827;
+        padding: 10px 12px;
+      }
+
+      .map-legend h2 {
+        margin: 0 0 8px;
+        color: #111827;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .map-legend ul {
+        display: grid;
+        gap: 7px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .map-legend li {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .legend-marker {
+        display: inline-block;
+        flex: 0 0 auto;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid rgba(17, 24, 39, 0.28);
+      }
+
+      .legend-marker-red { background: #d63e2a; }
+      .legend-marker-blue { background: #2a81cb; }
+      .legend-marker-green { background: #72b026; }
+      .legend-marker-purple { background: #9c2bcb; }
+      .legend-marker-orange { background: #f69730; }
+      .legend-marker-darkred { background: #a23336; }
+      .legend-marker-darkblue { background: #2c5b89; }
+      .legend-marker-darkgreen { background: #728224; }
+      .legend-marker-cadetblue { background: #436978; }
+      .legend-marker-darkpurple { background: #5b396b; }
+
+      @media (max-width: 520px) {
+        .map-legend {
+          top: 8px;
+          right: 8px;
+          max-width: min(150px, calc(100vw - 78px));
+          max-height: 42vh;
+          padding: 8px 10px;
+        }
+
+        .map-legend li {
+          font-size: 11px;
+        }
       }
     </style>
     """
