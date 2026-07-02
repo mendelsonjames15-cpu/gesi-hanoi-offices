@@ -1,0 +1,2 @@
+folium>=0.16,<1.0
+urllib3<2; python_version < "3.10"
