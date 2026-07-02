@@ -1,6 +1,6 @@
 # GESI Hanoi Offices
 
-A small CSV-driven Folium project that generates a static `index.html` map for GitHub Pages.
+A small (vibe coded) CSV-driven Folium project that generates a static `index.html` map for GitHub Pages.
 
 ## Setup
 
