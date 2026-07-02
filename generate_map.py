@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import csv
 import html
-import random
 from dataclasses import dataclass
 from pathlib import Path
 from statistics import mean
@@ -19,16 +18,12 @@ SITE_TITLE = "GESI Hanoi Offices"
 INITIAL_BOUNDS_PADDING = (56, 56)
 MAX_INITIAL_ZOOM = 12
 MARKER_COLORS = [
-    "red",
-    "blue",
-    "green",
-    "purple",
-    "orange",
-    "darkred",
-    "darkblue",
-    "darkgreen",
-    "cadetblue",
-    "darkpurple",
+    ("red", "#d94841"),
+    ("blue", "#2f80ed"),
+    ("green", "#219653"),
+    ("orange", "#f2994a"),
+    ("purple", "#7b61ff"),
+    ("yellow", "#f2c94c"),
 ]
 
 
@@ -187,23 +182,26 @@ def popup_row(label: str, value: str, is_link: bool = False) -> str:
     return f"<dt>{escaped_label}</dt><dd>{content}</dd>"
 
 
-def random_marker_colors(count: int) -> list[str]:
+def marker_colors(count: int) -> list[tuple[str, str]]:
     if count > len(MARKER_COLORS):
         raise ValueError(
             f"The map has {count} locations, but only {len(MARKER_COLORS)} unique marker colors are available."
         )
-    return random.sample(MARKER_COLORS, count)
+    return MARKER_COLORS[:count]
 
 
-def legend_html(locations: list[WorkplaceLocation], colors: list[str]) -> str:
+def legend_html(
+    locations: list[WorkplaceLocation],
+    colors: list[tuple[str, str]],
+) -> str:
     rows = "\n".join(
         f"""
         <li>
-          <span class="legend-marker legend-marker-{html.escape(color)}"></span>
+          <span class="legend-marker" style="background: {html.escape(hex_color)}"></span>
           <span>{html.escape(format_people(location.people) or location.location_name)}</span>
         </li>
         """
-        for location, color in zip(locations, colors)
+        for location, (_color_name, hex_color) in zip(locations, colors)
     )
     return f"""
     <section class="map-legend">
@@ -222,12 +220,17 @@ def build_map(locations: list[WorkplaceLocation]) -> folium.Map:
         prefer_canvas=True,
     )
 
-    colors = random_marker_colors(len(locations))
-    for location, color in zip(locations, colors):
-        folium.Marker(
+    colors = marker_colors(len(locations))
+    for location, (_color_name, hex_color) in zip(locations, colors):
+        folium.CircleMarker(
             location=(location.latitude, location.longitude),
+            radius=8,
+            color="#ffffff",
+            weight=2,
+            fill=True,
+            fill_color=hex_color,
+            fill_opacity=0.95,
             popup=folium.Popup(popup_html(location), max_width=340),
-            icon=folium.Icon(color=color, icon="briefcase", prefix="fa"),
         ).add_to(map_)
 
     if locations:
@@ -345,17 +348,6 @@ def inject_styles(html_text: str) -> str:
         border-radius: 50%;
         border: 1px solid rgba(17, 24, 39, 0.28);
       }
-
-      .legend-marker-red { background: #d63e2a; }
-      .legend-marker-blue { background: #2a81cb; }
-      .legend-marker-green { background: #72b026; }
-      .legend-marker-purple { background: #9c2bcb; }
-      .legend-marker-orange { background: #f69730; }
-      .legend-marker-darkred { background: #a23336; }
-      .legend-marker-darkblue { background: #2c5b89; }
-      .legend-marker-darkgreen { background: #728224; }
-      .legend-marker-cadetblue { background: #436978; }
-      .legend-marker-darkpurple { background: #5b396b; }
 
       @media (max-width: 520px) {
         .map-legend {
